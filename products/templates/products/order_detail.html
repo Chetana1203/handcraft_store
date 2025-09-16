@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="order-detail-container">
+    <a href="{% url 'order_history' %}" style="display: inline-block; margin-bottom: 20px; text-decoration: none; color: #6d4c41;">← Back to Order History</a>
+    
+    <div class="order-header" style="border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 25px;">
+        <h1>Order #{{ order.id }}</h1>
+        <div class="order-meta" style="display: flex; justify-content: space-between; color: #666;">
+            <span>Placed on: {{ order.created_at|date:"F j, Y, g:i a" }}</span>
+            <span><strong>Status:</strong> {{ order.get_status }}</span>
+        </div>
+    </div>
+    
+    <div class="order-items" style="margin-bottom: 30px;">
+        <h2>Order Items</h2>
+        {% for item in order.orderitem_set.all %}
+        <div class="order-item" style="display: flex; align-items: center; border: 1px solid #eee; padding: 15px; margin-bottom: 10px; border-radius: 5px;">
+            <div class="item-image" style="margin-right: 15px;">
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" width="80" style="border-radius: 4px;">
+            </div>
+            <div class="item-details" style="flex: 1;">
+                <h3>{{ item.product.name }}</h3>
+                <p>Quantity: {{ item.quantity }}</p>
+            </div>
+            <div class="item-price" style="text-align: right;">
+                <p>${{ item.product.price }} each</p>
+                <p><strong>Total: ${{ item.get_total }}</strong></p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="order-summary" style="background: #f9f9f9; padding: 20px; border-radius: 8px;">
+        <h2>Order Summary</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <p><strong>Items:</strong></p>
+            <p style="text-align: right;">{{ order.get_cart_items }}</p>
+            
+            <p><strong>Total:</strong></p>
+            <p style="text-align: right; font-size: 1.2em; color: #6d4c41;">${{ order.get_cart_total }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

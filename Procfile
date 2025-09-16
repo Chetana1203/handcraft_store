@@ -1,0 +1,1 @@
+web: gunicorn handcraft_store.wsgi:application --log-file -

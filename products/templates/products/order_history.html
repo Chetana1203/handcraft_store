@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="order-history-container">
+    <h1>Your Order History</h1>
+    
+    {% if orders %}
+        <div class="orders-list">
+            {% for order in orders %}
+            <div class="order-card" style="border: 1px solid #ddd; padding: 20px; margin-bottom: 20px; border-radius: 8px;">
+                <div class="order-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3>Order #{{ order.id }}</h3>
+                    <span class="order-date" style="color: #666;">{{ order.created_at|date:"F j, Y, g:i a" }}</span>
+                </div>
+                
+                <div class="order-details" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <p><strong>Status:</strong> {{ order.get_status }}</p>
+                        <p><strong>Items:</strong> {{ order.get_cart_items }}</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p><strong>Total:</strong> ${{ order.get_cart_total }}</p>
+                        <a href="{% url 'order_detail' order.id %}" class="btn" style="display: inline-block; background: #6d4c41; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; margin-top: 10px;">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-orders" style="text-align: center; padding: 40px;">
+            <p>You haven't placed any orders yet.</p>
+            <a href="{% url 'home' %}" class="btn" style="display: inline-block; background: #6d4c41; color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none; margin-top: 15px;">
+                Start Shopping
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
