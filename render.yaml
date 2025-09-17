@@ -7,8 +7,13 @@ services:
     startCommand: "gunicorn handcraft_store.wsgi:application"
     envVars:
       - key: SECRET_KEY
-        generateValue: "ni=o%h7m)wr+vgez=y_%ag)bgx@zpt4!-xw2^c#r!&r23(*fe1"
+        generateValue: true
       - key: DEBUG
         value: "False"
       - key: PYTHON_VERSION
         value: "3.10.8"
+      - key: RENDER_EXTERNAL_HOSTNAME
+        fromService:
+          name: handcraft-store
+          type: web
+          property: hostname
