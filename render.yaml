@@ -1,9 +1,3 @@
-databases:
-  - name: handcraft-store-db
-    plan: free
-    databaseName: handcraft_store
-    user: handcraft_store_user
-
 services:
   - type: web
     name: handcraft-store
@@ -18,7 +12,10 @@ services:
         value: "False"
       - key: PYTHON_VERSION
         value: "3.10.8"
-      - fromDatabase:
-          name: handcraft-store-db
-          property: connectionString
-          as: DATABASE_URL
+      - key: RENDER_EXTERNAL_HOSTNAME
+        fromService:
+          name: handcraft-store
+          type: web
+          property: hostname
+
+          

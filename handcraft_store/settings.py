@@ -7,10 +7,23 @@ from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-development-key')
+
+# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['handcraft-store-g5te.onrender.com', 'localhost', '127.0.0.1']
+# Get the Render external URL dynamically
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+
+# ALLOWED_HOSTS configuration
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS = [RENDER_EXTERNAL_HOSTNAME, 'handcraft-store-g5te.onrender.com']
+else:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+# Add this for Render's health checks
+ALLOWED_HOSTS.append('0.0.0.0')
 
 # Application definition
 INSTALLED_APPS = [
@@ -40,7 +53,7 @@ ROOT_URLCONF = 'handcraft_store.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -56,7 +69,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'handcraft_store.wsgi.application'
 
 # Database
-# Use PostgreSQL on Render, SQLite locally
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -97,7 +109,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Media files (this is temporary - you'll need cloud storage for images)
+# Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -106,3 +118,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Whitenoise storage
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Security settings for production
+if not DEBUG:
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+    CSRF_TRUSTED_ORIGINS = [f'https://{host}' for host in ALLOWED_HOSTS if host != '0.0.0.0']
