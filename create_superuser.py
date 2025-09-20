@@ -13,7 +13,7 @@ def main():
     # Get credentials from environment or use defaults
     username = os.environ.get('ADMIN_USERNAME', 'admin')
     email = os.environ.get('ADMIN_EMAIL', 'admin@handcraftstore.com')
-    password = os.environ.get('ADMIN_PASSWORD', 'admin123')
+    password = os.environ.get('ADMIN_PASSWORD', 'Handmadeheaven123')
     
     # Create or update admin user
     if User.objects.filter(username=username).exists():
