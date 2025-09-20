@@ -7,20 +7,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-your-secret-key-here'
 
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-if not DEBUG:
-    from django.contrib.auth.models import User
-    import os
-    
-    ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
-    ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'admin123')
-    ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'admin@handcraftstore.com')
-    
-    try:
-        if not User.objects.filter(username=ADMIN_USERNAME).exists():
-            User.objects.create_superuser(ADMIN_USERNAME, ADMIN_EMAIL, ADMIN_PASSWORD)
-            print(f"Admin user '{ADMIN_USERNAME}' created automatically")
-    except:
-        print("Could not create admin user (maybe migrations not run yet)")
+
 
 ALLOWED_HOSTS = ['*']
 
