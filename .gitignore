@@ -47,3 +47,7 @@ logs/
 
 # Windows
 Thumbs.db
+
+# Superuser config
+superuser_config.json
+superuser_credentials.txt
