@@ -1,7 +1,8 @@
 # 🛍️ Handcraft Store - E-commerce Platform
 
 A Django-based e-commerce website for selling beautiful handcrafted products.
-**Website Name** : Handmade Heaven
+
+-**Website Name** : Handmade Heaven
 
 ## ✨ Features
 
