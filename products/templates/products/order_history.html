@@ -19,7 +19,7 @@
                         <p><strong>Items:</strong> {{ order.get_cart_items }}</p>
                     </div>
                     <div style="text-align: right;">
-                        <p><strong>Total:</strong> ${{ order.get_cart_total }}</p>
+                        <p><strong>Total:</strong> ₹{{ order.get_cart_total }}</p>
                         <a href="{% url 'order_detail' order.id %}" class="btn" style="display: inline-block; background: #6d4c41; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; margin-top: 10px;">
                             View Details
                         </a>

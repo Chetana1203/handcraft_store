@@ -24,8 +24,8 @@
                 <p>Quantity: {{ item.quantity }}</p>
             </div>
             <div class="item-price" style="text-align: right;">
-                <p>${{ item.product.price }} each</p>
-                <p><strong>Total: ${{ item.get_total }}</strong></p>
+                <p>₹{{ item.product.price }} each</p>
+                <p><strong>Total: ₹{{ item.get_total }}</strong></p>
             </div>
         </div>
         {% endfor %}
@@ -38,7 +38,7 @@
             <p style="text-align: right;">{{ order.get_cart_items }}</p>
             
             <p><strong>Total:</strong></p>
-            <p style="text-align: right; font-size: 1.2em; color: #6d4c41;">${{ order.get_cart_total }}</p>
+            <p style="text-align: right; font-size: 1.2em; color: #6d4c41;">₹{{ order.get_cart_total }}</p>
         </div>
     </div>
 </div>
