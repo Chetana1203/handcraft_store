@@ -9,5 +9,6 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
 ]
 
+# ✅ CORRECTED: Serve media files in DEVELOPMENT only
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # ✅ FIXED: MEDIA_ROOT not MEDIA_URL

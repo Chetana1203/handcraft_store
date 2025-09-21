@@ -2,6 +2,45 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product, Category, Order, OrderItem
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET
+import os
+from django.conf import settings
+
+@require_GET
+def check_media_files(request):
+    """Check if media files exist on filesystem"""
+    media_files = []
+    
+    # Check media root exists
+    media_root_exists = os.path.exists(settings.MEDIA_ROOT)
+    
+    # Check products directory exists
+    products_dir = os.path.join(settings.MEDIA_ROOT, 'products')
+    products_dir_exists = os.path.exists(products_dir)
+    
+    # List all files in products directory
+    if products_dir_exists:
+        files = os.listdir(products_dir)
+        for file in files:
+            file_path = os.path.join(products_dir, file)
+            file_exists = os.path.exists(file_path)
+            file_url = f"{settings.MEDIA_URL}products/{file}"
+            media_files.append({
+                'name': file,
+                'path': file_path,
+                'url': file_url,
+                'exists': file_exists
+            })
+    
+    return JsonResponse({
+        'media_root': settings.MEDIA_ROOT,
+        'media_root_exists': media_root_exists,
+        'products_dir': products_dir,
+        'products_dir_exists': products_dir_exists,
+        'media_files': media_files,
+        'debug_note': 'Visit /media-check/ to see this information'
+    })
 
 def get_cart_count(user):
     """Helper function to get cart item count for a user"""
