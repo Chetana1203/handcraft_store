@@ -24,7 +24,13 @@ A Django-based e-commerce website for selling beautiful handcrafted products.
   - Mobile-friendly interface
   - Clean, modern UI
   - Easy navigation
-
+    
+| Feature | Status | Description |
+|---------|--------|-------------|
+| User Auth | ✅ | Login/Register system |
+| Products | ✅ | CRUD operations |
+| Shopping Cart | ✅ | Add/remove items |
+| Orders | ✅ | Order history |
 ## 🚀 Live Demo
 
 - **Main Store**: [https://handcraft-store-g5te.onrender.com](https://handcraft-store-g5te.onrender.com)
