@@ -5,10 +5,11 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('products.urls')),     # product pages
-    path('accounts/', include('accounts.urls')),  # account pages
+    path('', include('products.urls')),       # products app is default homepage
+    path('accounts/', include('accounts.urls')),  # accounts app
 ]
 
 # Serve media files in development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
